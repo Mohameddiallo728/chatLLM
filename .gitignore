@@ -163,3 +163,8 @@ cython_debug/
 
 # Vscode
 .vscode/
+
+# Other
+embdb/
+emb_db/
+chroma/
