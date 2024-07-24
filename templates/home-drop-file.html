@@ -1,0 +1,351 @@
+<html><head><base href="https://webagent.ai/chat%20use%20this%20page%20and%20just%20add%20a%20drop%20file%20area%20in%20the%20sidebar%20when%20no%20file%20uploaded"><title>WebAgent AI - Advanced Document Analysis</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        background: #f7f7f7;
+        color: #333;
+        height: 100%;
+        overflow: hidden;
+    }
+    .container {
+        display: flex;
+        height: 100vh;
+    }
+    .sidebar {
+        width: 300px;
+        background: #fff;
+        border-right: 1px solid #e0e0e0;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .main-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .chat-interface {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    #chat-messages {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 20px;
+    }
+    .message {
+        margin-bottom: 20px;
+        line-height: 1.6;
+        display: flex;
+        align-items: flex-start;
+    }
+    .user-message {
+        justify-content: flex-end;
+    }
+    .message-content {
+        max-width: 80%;
+        padding: 15px;
+        border-radius: 10px;
+    }
+    .user-message .message-content {
+        background: #f0f7ff;
+        margin-right: 10px;
+    }
+    .ai-message .message-content {
+        background: #fff;
+        margin-left: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .input-area {
+        display: flex;
+        padding: 20px;
+        background: #fff;
+        border-top: 1px solid #e0e0e0;
+    }
+    #user-input {
+        flex-grow: 1;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 25px;
+        font-size: 16px;
+    }
+    #send-button {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        padding: 15px 30px;
+        margin-left: 10px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .sidebar h2 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .sidebar li {
+        margin-bottom: 10px;
+    }
+    .sidebar a {
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .sidebar a:hover {
+        color: #0056b3;
+    }
+    .source {
+        font-size: 0.9em;
+        color: #666;
+        margin-top: 10px;
+    }
+    .tag {
+        display: inline-block;
+        background: #e9ecef;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.9em;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    .highlight {
+        background: #fff3cd;
+        padding: 2px 4px;
+        border-radius: 3px;
+    }
+    .document-info {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .document-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 10px;
+    }
+    .document-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .account-option {
+        margin-top: auto;
+        text-align: center;
+        padding: 10px;
+        background: #f0f0f0;
+        border-radius: 5px;
+    }
+    .drop-area {
+        border: 2px dashed #007bff;
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .drop-area:hover {
+        background-color: #f0f7ff;
+    }
+    .drop-area p {
+        margin: 0;
+        font-size: 16px;
+        color: #007bff;
+    }
+</style>
+</head><body>
+<div class="container">
+    <div class="sidebar">
+        <div class="drop-area" id="drop-area">
+            <p>Drag and drop your file here</p>
+            <p>or</p>
+            <p><strong>Click to upload</strong></p>
+        </div>
+        <h2>Document Structure</h2>
+        <ul>
+            <li><a href="#" onclick="focusSection('introduction')">Introduction</a></li>
+            <li><a href="#" onclick="focusSection('methodology')">Methodology</a></li>
+            <li><a href="#" onclick="focusSection('results')">Results</a></li>
+            <li><a href="#" onclick="focusSection('discussion')">Discussion</a></li>
+            <li><a href="#" onclick="focusSection('conclusion')">Conclusion</a></li>
+        </ul>
+        <h2>Key Concepts</h2>
+        <div id="key-concepts">
+            <span class="tag">Machine Learning</span>
+            <span class="tag">Neural Networks</span>
+            <span class="tag">Data Analysis</span>
+            <span class="tag">AI Ethics</span>
+            <span class="tag">Predictive Modeling</span>
+        </div>
+        <div class="account-option">
+            <a href="#" onclick="alert('Account settings would open here')">Account Settings</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="chat-interface">
+            <div id="chat-messages">
+                <div class="message ai-message">
+                    <div class="avatar">
+                        <img src="https://i.imgur.com/3Nt4sPp.png" alt="AI Avatar" width="40" height="40">
+                    </div>
+                    <div class="message-content">
+                        Welcome to WebAgent AI! To get started, please upload a document using the drop area in the sidebar. Once uploaded, I'll analyze the document and be ready to answer any questions you may have about its content.
+                    </div>
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Ask about the document or explore a concept...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
+    const dropArea = document.getElementById('drop-area');
+
+    sendButton.addEventListener('click', sendMessage);
+    userInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    dropArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropArea.style.backgroundColor = '#e6f2ff';
+    });
+
+    dropArea.addEventListener('dragleave', () => {
+        dropArea.style.backgroundColor = '';
+    });
+
+    dropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropArea.style.backgroundColor = '';
+        const files = e.dataTransfer.files;
+        handleFileUpload(files[0]);
+    });
+
+    dropArea.addEventListener('click', () => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.pdf,.doc,.docx,.txt';
+        fileInput.onchange = (e) => {
+            handleFileUpload(e.target.files[0]);
+        };
+        fileInput.click();
+    });
+
+    function handleFileUpload(file) {
+        // Here you would typically send the file to your server for processing
+        // For this example, we'll just simulate a successful upload
+        setTimeout(() => {
+            dropArea.innerHTML = `
+                <div class="document-info">
+                    <div class="document-icon">
+                        <img src="https://i.imgur.com/uNuMYKB.png" alt="PDF Document Icon" width="100" height="100">
+                    </div>
+                    <div class="document-name">${file.name}</div>
+                    <div class="document-type">${file.type}</div>
+                </div>
+            `;
+            addMessage('ai', `Great! I've received the document "${file.name}". I'm analyzing it now. Feel free to ask me any questions about its content.`);
+        }, 1500);
+    }
+
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (message) {
+            addMessage('user', message);
+            userInput.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const aiResponse = getAIResponse(message);
+                addMessage('ai', aiResponse);
+            }, 1000);
+        }
+    }
+
+    function addMessage(sender, message) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', sender + '-message');
+        
+        const avatarElement = document.createElement('div');
+        avatarElement.classList.add('avatar');
+        const avatarImg = document.createElement('img');
+        avatarImg.src = sender === 'user' ? 'https://i.imgur.com/6VBx3io.png' : 'https://i.imgur.com/3Nt4sPp.png';
+        avatarImg.alt = sender === 'user' ? 'User Avatar' : 'AI Avatar';
+        avatarImg.width = 40;
+        avatarImg.height = 40;
+        avatarElement.appendChild(avatarImg);
+        
+        const messageContentElement = document.createElement('div');
+        messageContentElement.classList.add('message-content');
+        messageContentElement.innerHTML = message;
+        
+        if (sender === 'user') {
+            messageElement.appendChild(messageContentElement);
+            messageElement.appendChild(avatarElement);
+        } else {
+            messageElement.appendChild(avatarElement);
+            messageElement.appendChild(messageContentElement);
+        }
+        
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getAIResponse(message) {
+        // Simulate AI response based on user input
+        const responses = {
+            'introduction': `The introduction typically covers the background of the research, the problem statement, and the objectives of the study. Without a specific document uploaded, I can't provide details about a particular introduction. If you have a document in mind, please upload it and I'll analyze its introduction for you.`,
+            'methodology': `The methodology section usually describes the research design, data collection methods, and analysis techniques used in the study. To give you specific information about a methodology, I'd need to analyze an uploaded document. Feel free to upload one and I'll be happy to break down its methodology for you.`,
+            'results': `Results sections present the findings of the study, often including statistical analyses and data visualizations. If you're looking for results from a particular document, please upload it and I can provide a detailed summary of its findings.`,
+            'discussion': `The discussion typically interprets the results, compares them to existing literature, and explores their implications. For a specific discussion analysis, I'd need to review an uploaded document. Once you upload one, I can offer insights into its discussion section.`,
+            'conclusion': `Conclusions usually summarize the key findings, address the research objectives, and suggest future research directions. To give you accurate information about a conclusion, I'd need to analyze a specific document. Please upload one and I'll summarize its conclusion for you.`,
+            'machine learning': `Machine learning is a branch of artificial intelligence focused on building systems that learn from data. It's a vast field with many applications. If you're interested in how machine learning is applied in a specific document, please upload it and I can highlight its machine learning aspects.`,
+            'neural networks': `Neural networks are a key component of deep learning, inspired by the human brain's structure. They're used in various AI applications. If you have a document that discusses neural networks, upload it and I can provide more specific information about how they're addressed.`,
+            'data analysis': `Data analysis involves inspecting, cleaning, transforming, and modeling data to discover useful information and support decision-making. For insights on data analysis techniques used in a particular study, please upload the document and I'll analyze its data analysis methods for you.`
+        };
+
+        for (const [key, value] of Object.entries(responses)) {
+            if (message.toLowerCase().includes(key)) {
+                return value;
+            }
+        }
+
+        return `Thank you for your question. To provide accurate information, I'd need to analyze a specific document. Please upload a document using the drop area in the sidebar, and then I'll be able to answer questions about its content in detail. Feel free to ask about any aspect of the document once it's uploaded, such as its methodology, results, or key concepts.`;
+    }
+
+    function focusSection(section) {
+        const message = `Tell me about the ${section} section of the document.`;
+        userInput.value = message;
+        sendMessage();
+    }
+</script>
+</body></html>

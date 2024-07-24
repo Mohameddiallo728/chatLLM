@@ -1,0 +1,239 @@
+<html><head><base href="https://webagent.ai/chat"><title>WebAgent AI - Settings</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        height: 100%;
+        overflow: hidden;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    body.light-theme {
+        background: #f7f7f7;
+        color: #333;
+    }
+    body.dark-theme {
+        background: #222;
+        color: #f0f0f0;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    h1 {
+        text-align: center;
+        color: #007bff;
+        margin-bottom: 30px;
+    }
+    .settings-group {
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transition: background-color 0.3s;
+    }
+    .light-theme .settings-group {
+        background: #fff;
+    }
+    .dark-theme .settings-group {
+        background: #333;
+    }
+    .settings-group h2 {
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+    .light-theme .settings-group h2 {
+        color: #333;
+    }
+    .dark-theme .settings-group h2 {
+        color: #f0f0f0;
+    }
+    .setting-item {
+        margin-bottom: 15px;
+    }
+    .setting-item label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .setting-item select, .setting-item input[type="range"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .light-theme .setting-item select, .light-theme .setting-item input[type="range"] {
+        border: 1px solid #ddd;
+        background-color: #fff;
+        color: #333;
+    }
+    .dark-theme .setting-item select, .dark-theme .setting-item input[type="range"] {
+        border: 1px solid #555;
+        background-color: #444;
+        color: #f0f0f0;
+    }
+    .setting-item input[type="range"] {
+        padding: 0;
+    }
+    .setting-item output {
+        display: block;
+        text-align: center;
+        margin-top: 5px;
+        font-weight: bold;
+    }
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    .button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .save-button {
+        background-color: #007bff;
+        color: white;
+    }
+    .save-button:hover {
+        background-color: #0056b3;
+    }
+    .cancel-button {
+        background-color: #f8f9fa;
+        color: #333;
+    }
+    .cancel-button:hover {
+        background-color: #e2e6ea;
+    }
+    .dark-theme .cancel-button {
+        background-color: #444;
+        color: #f0f0f0;
+    }
+    .dark-theme .cancel-button:hover {
+        background-color: #555;
+    }
+</style>
+</head><body class="light-theme">
+<div class="container">
+    <h1>Settings</h1>
+    <form id="settings-form">
+        <div class="settings-group">
+            <h2>Language</h2>
+            <div class="setting-item">
+                <label for="language">Interface Language:</label>
+                <select id="language" name="language">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                    <option value="de">Deutsch</option>
+                    <option value="zh">中文</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h2>Appearance</h2>
+            <div class="setting-item">
+                <label for="theme">Theme:</label>
+                <select id="theme" name="theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="auto">System Default</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h2>Chat Preferences</h2>
+            <div class="setting-item">
+                <label for="response-length">AI Response Length:</label>
+                <input type="range" id="response-length" name="response-length" min="1" max="5" step="1" value="3">
+                <output for="response-length">Medium</output>
+            </div>
+            <div class="setting-item">
+                <label for="chat-style">Chat Style:</label>
+                <select id="chat-style" name="chat-style">
+                    <option value="friendly">Friendly</option>
+                    <option value="professional">Professional</option>
+                    <option value="concise">Concise</option>
+                    <option value="detailed">Detailed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="button cancel-button" onclick="window.history.back()">Cancel</button>
+            <button type="submit" class="button save-button">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('settings-form');
+    const responseLengthSlider = document.getElementById('response-length');
+    const responseLengthOutput = document.querySelector('output[for="response-length"]');
+    const themeSelect = document.getElementById('theme');
+
+    // Update the response length output text
+    responseLengthSlider.addEventListener('input', function() {
+        const value = this.value;
+        let text;
+        switch(value) {
+            case '1': text = 'Very Short'; break;
+            case '2': text = 'Short'; break;
+            case '3': text = 'Medium'; break;
+            case '4': text = 'Long'; break;
+            case '5': text = 'Very Long'; break;
+        }
+        responseLengthOutput.textContent = text;
+    });
+
+    // Theme changing functionality
+    function setTheme(theme) {
+        if (theme === 'auto') {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.body.className = prefersDark ? 'dark-theme' : 'light-theme';
+        } else {
+            document.body.className = theme + '-theme';
+        }
+    }
+
+    // Initialize theme
+    setTheme(themeSelect.value);
+
+    // Listen for theme changes
+    themeSelect.addEventListener('change', function() {
+        setTheme(this.value);
+    });
+
+    // Listen for system theme changes if auto is selected
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        if (themeSelect.value === 'auto') {
+            setTheme('auto');
+        }
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const settings = Object.fromEntries(formData.entries());
+        
+        // Here you would typically send these settings to a server
+        console.log('Settings saved:', settings);
+
+        // Simulate saving and return to the main chat interface
+        alert('Settings saved successfully!');
+        window.history.back();
+    });
+</script>
+</body></html>
