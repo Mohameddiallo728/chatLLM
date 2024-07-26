@@ -1,71 +1,65 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr-Fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAG</title>
-    <link rel="stylesheet" href="static/css/home.css">
-</head>
-<body>
-<div class="container">
-    <div class="sidebar">
-        <div class="drop-area" id="drop-area">
-            <form id="upload-form" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="file" id="file-input" name="file" style="display:none;" required onchange="updateDocumentInfo(this.files[0])">
-                <p>Drag and drop your file here</p>
-                <p>or</p>
-                <p><strong>Click to upload</strong></p>
-            </form>
-        </div>
-        <div class="document-info">
-            <div class="document-icon">
-                <img src="{% static '/img/okka.jpg' %}" alt="cartoon-woman-wearing-glasses" width="100" height="100" id="document-icon">
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>RAG</title>
+        <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="sidebar">
+                <div class="drop-area" id="drop-area">
+                    <form id="upload-form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" id="file-input" name="file" style="display:none;" required onchange="updateDocumentInfo(this.files[0])">
+                        <p>Drag and drop your file here</p>
+                        <p>or</p>
+                        <p><strong>Click to upload</strong></p>
+                    </form>
+                </div>
+                <h2>Document Structure</h2>
+                <ul>
+                    <li><a href="#" onclick="focusSection('introduction')">Introduction</a></li>
+                    <li><a href="#" onclick="focusSection('methodology')">Methodology</a></li>
+                    <li><a href="#" onclick="focusSection('results')">Results</a></li>
+                    <li><a href="#" onclick="focusSection('discussion')">Discussion</a></li>
+                    <li><a href="#" onclick="focusSection('conclusion')">Conclusion</a></li>
+                </ul>
+                <h2>Key Concepts</h2>
+                <div id="key-concepts">
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">Neural Networks</span>
+                    <span class="tag">Data Analysis</span>
+                    <span class="tag">AI Ethics</span>
+                    <span class="tag">Predictive Modeling</span>
+                </div>
+                <div class="account-option">
+                    <a href="#">Account Settings</a>
+                </div>
             </div>
-            <div class="document-name" id="document-name">No file selected</div>
-            <div class="document-type" id="document-type">-</div>
-        </div>
-        <h2>Document Structure</h2>
-        <ul>
-            <li><a href="#" onclick="focusSection('introduction')">Introduction</a></li>
-            <li><a href="#" onclick="focusSection('methodology')">Methodology</a></li>
-            <li><a href="#" onclick="focusSection('results')">Results</a></li>
-            <li><a href="#" onclick="focusSection('discussion')">Discussion</a></li>
-            <li><a href="#" onclick="focusSection('conclusion')">Conclusion</a></li>
-        </ul>
-        <h2>Key Concepts</h2>
-        <div id="key-concepts">
-            <span class="tag">Machine Learning</span>
-            <span class="tag">Neural Networks</span>
-            <span class="tag">Data Analysis</span>
-            <span class="tag">AI Ethics</span>
-            <span class="tag">Predictive Modeling</span>
-        </div>
-        <div class="account-option">
-            <a href="#">Account Settings</a>
-        </div>
-    </div>
-    <div class="main-content">
-        <div class="chat-interface">
-            <div id="chat-messages">
-                <div class="message ai-message">
-                    <div class="avatar">
-                        <img src="{% static '/img/okka.jpg' %}" alt="cartoon-woman-wearing-glasses" width="40" height="40">
+            <div class="main-content">
+                <div class="chat-interface">
+                    <div id="chat-messages">
+                        <div class="message ai-message">
+                            <div class="avatar">
+                                <img src="{% static 'img/okka.jpg' %}" alt="cartoon-woman-wearing-glasses" width="40" height="40">
+                            </div>
+                            <div class="message-content">
+                                Welcome to WebAgent AI! To get started, please upload a document using the drop area in the sidebar. 
+                                Once uploaded, I'll analyze the document and be ready to answer any questions you may have about its content.
+                            </div>
+                        </div>
                     </div>
-                    <div class="message-content">
-                        Welcome to WebAgent AI! To get started, please upload a document using the drop area in the sidebar. 
-                        Once uploaded, I'll analyze the document and be ready to answer any questions you may have about its content.
+                    <div class="input-area">
+                        <input type="text" id="user-input" placeholder="Ask about the document or explore a concept...">
+                        <button id="send-button">Send</button>
                     </div>
                 </div>
             </div>
-            <div class="input-area">
-                <input type="text" id="user-input" placeholder="Ask about the document or explore a concept...">
-                <button id="send-button">Send</button>
-            </div>
         </div>
-    </div>
-</div>
-<script src="{% static 'js/home.js' %}"></script>
-</body>
+        <script src="{% static 'js/home.js' %}"></script>
+    </body>
 </html>
