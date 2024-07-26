@@ -170,3 +170,8 @@ body, html {
     font-size: 16px;
     color: #007bff;
 }
+.highlight {
+    background: #fff3cd;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
