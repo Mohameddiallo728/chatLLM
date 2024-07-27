@@ -168,4 +168,3 @@ cython_debug/
 embdb/
 emb_db/
 chroma/
-staticfiles/

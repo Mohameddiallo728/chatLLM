@@ -1,0 +1,7 @@
+streamlit
+langchain
+streamlit-chat
+PyMuPDF
+sentence-transformers
+chromadb
+pickle5
