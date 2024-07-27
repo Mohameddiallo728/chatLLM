@@ -13,8 +13,10 @@ RAG Mistral est une application Streamlit qui utilise LangChain et différents m
 
 ### Prérequis
 
-Assurez-vous d'avoir installé Python sur votre machine, Ollama et mistral en locale
-ce article medium vous permettra de faire l'installation complete si ce n'est pas le cas:
+Assurez-vous d'avoir installé Python sur votre machine, Ollama et mistral en local.
+
+Cet article médium vous permettra de faire l'installation complète si ce n'est pas le cas: 
+
 [Local LLM Installation Guide: Install Llama3 using Ollama](https://medium.com/@sealteamsecs/local-llm-installation-guide-install-llama3-using-ollama-ef8cf68bb461)
 
 
