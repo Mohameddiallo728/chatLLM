@@ -1,14 +1,13 @@
 import os
 import streamlit as st
 from streamlit_chat import message
-from langchain.llms import Ollama
+from langchain_community.llms import Ollama
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 import pickle
-import time
 
 # Define paths
 CHROMA_PATH = "embdb"
@@ -16,9 +15,9 @@ EMB_CACHE_PATH = "emb_cache.pkl"
 emb_model = "sentence-transformers/all-MiniLM-L6-v2"
 
 # App title
-st.set_page_config(page_title="👨🏻‍💻 RAG mistral")
+st.set_page_config(page_title="RAG mistral")
 with st.sidebar:
-    st.title("👨🏻‍💻 RAG mistral")
+    st.title("RAG mistral")
 
 # Store LLM-generated responses
 if "messages" not in st.session_state.keys():
