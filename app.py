@@ -16,6 +16,8 @@ emb_model = "sentence-transformers/all-MiniLM-L6-v2"
 
 # App title
 st.set_page_config(page_title="RAG mistral")
+
+
 with st.sidebar:
     st.title("RAG mistral")
 
@@ -25,7 +27,7 @@ if "messages" not in st.session_state.keys():
 
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "Comment puis-je vous aider aujourd'hui ?"}]
-st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
+st.sidebar.button("Effacer l'historique", on_click=clear_chat_history)
 
 # Sidebar for PDF upload
 uploaded_file = st.sidebar.file_uploader("Choisissez un fichier PDF", type="pdf")
@@ -106,16 +108,26 @@ if prompt := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": prompt})
     message(prompt, is_user=True, key=f"user_{len(st.session_state.messages)}", avatar_style="lorelei/svg?seed=Aneka")
 
-    # Generate a new response if the last message is not from the assistant
-    if st.session_state.messages[-1]["role"] != "assistant":
-        with st.spinner('La réponse est en cours de génération...'):
-            results = db.similarity_search_with_relevance_scores(prompt, k=3)
-            context_text = "\n\n - -\n\n".join([doc.page_content for doc, _score in results])
-            prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-            formatted_prompt = prompt_template.format(context=context_text, question=prompt)
+    if not uploaded_file:
+        response = "Veuillez d'abord télécharger un fichier PDF à partir de la barre latérale."
+        message_data = {"role": "assistant", "content": response}
+        st.session_state.messages.append(message_data)
+        message(response, is_user=False, key=f"assistant_{len(st.session_state.messages)}", avatar_style="bottts/svg?seed=Aneka")
+    else:
+        # Generate a new response if the last message is not from the assistant
+        if st.session_state.messages[-1]["role"] != "assistant":
+            with st.spinner('La réponse est en cours de génération...'):
+                results = db.similarity_search_with_relevance_scores(prompt, k=3)
+                context_text = "\n\n - -\n\n".join([doc.page_content for doc, _score in results])
+                prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
+                formatted_prompt = prompt_template.format(context=context_text, question=prompt)
 
-            response = model.invoke(formatted_prompt)
+                response = model.invoke(formatted_prompt)
 
-            message_data = {"role": "assistant", "content": response}
-            st.session_state.messages.append(message_data)
-            message(response, is_user=False, key=f"assistant_{len(st.session_state.messages)}", avatar_style="bottts/svg?seed=Aneka")
+                message_data = {"role": "assistant", "content": response}
+                st.session_state.messages.append(message_data)
+                message(response, is_user=False, key=f"assistant_{len(st.session_state.messages)}", avatar_style="bottts/svg?seed=Aneka")
+
+# Include custom CSS and JavaScript
+st.markdown('<style>{}</style>'.format(open('style.css').read()), unsafe_allow_html=True)
+st.markdown('<script>{}</script>'.format(open('script.js').read()), unsafe_allow_html=True)

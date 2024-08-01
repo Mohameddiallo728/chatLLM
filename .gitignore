@@ -169,3 +169,4 @@ embdb/
 emb_db/
 chroma/
 uploads/
+emb_cache.pkl
