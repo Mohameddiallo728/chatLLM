@@ -2,7 +2,9 @@
 
 RAG Mistral est une application Streamlit qui utilise LangChain et différents modèles d'apprentissage automatique pour offrir une expérience de chat interactive. Les utilisateurs peuvent télécharger des documents PDF que l'application traite pour générer des embeddings et répondre aux requêtes des utilisateurs en fonction du contenu des documents.
 
-![Architecture](https://github.com/Mohameddiallo728/chatLLM/blob/main/Diagram-of-BERTScore-Retrieved-from-53.jpg?raw=true)
+![Architecture Simple](https://raw.githubusercontent.com/Mohameddiallo728/chatLLM/main/app-architecture.png)
+
+![Architecture](https://raw.githubusercontent.com/Mohameddiallo728/chatLLM/main/architecture.png)
 
 ## Fonctionnalités
 
